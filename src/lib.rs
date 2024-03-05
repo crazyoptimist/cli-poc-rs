@@ -42,12 +42,24 @@ pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
     results
 }
 
+pub fn search_case_insensitive<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
+    let mut results = Vec::new();
+
+    for line in contents.lines() {
+        if line.contains(query) {
+            results.push(line);
+        }
+    }
+
+    results
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
 
     #[test]
-    fn should_return_one_line_result() {
+    fn find_one_line_result() {
         let query = "duct";
         let contents = "\
 Rust:
@@ -60,7 +72,7 @@ Pick three.";
     }
 
     #[test]
-    fn should_case_insensitive() {
+    fn find_case_insensitive_results() {
         let query = "rUsT";
         let contents = "\
 Rust:
@@ -70,6 +82,6 @@ Trust me.";
 
         let want = vec!["Rust:", "Trust me."];
 
-        assert_eq!(want, search(query, contents));
+        assert_eq!(want, search_case_insensitive(query, contents));
     }
 }
