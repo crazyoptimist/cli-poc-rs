@@ -3,7 +3,9 @@ use std::{error::Error, fs};
 pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
     let contents = fs::read_to_string(config.file_path)?;
 
-    println!("With text: \n {contents}");
+    for result_line in search(&config.query, &contents) {
+        println!("{result_line}")
+    }
 
     Ok(())
 }
@@ -53,6 +55,20 @@ safe, fast, productive.
 Pick three.";
 
         let want = vec!["safe, fast, productive."];
+
+        assert_eq!(want, search(query, contents));
+    }
+
+    #[test]
+    fn should_case_insensitive() {
+        let query = "rUsT";
+        let contents = "\
+Rust:
+safe, fast, productive.
+Pick three.
+Trust me.";
+
+        let want = vec!["Rust:", "Trust me."];
 
         assert_eq!(want, search(query, contents));
     }
