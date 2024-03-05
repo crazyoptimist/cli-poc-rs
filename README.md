@@ -9,3 +9,9 @@ This repo demonstrates my learning of:
 - Writing tests
 
 By the way, I darn love `ripgrep` or `R.I.P. GREP(1)` :X
+
+### Run
+
+```bash
+cargo run -- frog poem.txt
+```
