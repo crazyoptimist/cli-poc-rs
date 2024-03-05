@@ -25,3 +25,27 @@ impl Config {
         Ok(Config { query, file_path })
     }
 }
+
+// search results are tied to the contents,
+// so the lifetime of contents can be attached to the return value
+pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
+    vec![]
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn should_return_one_line_result() {
+        let query = "duct";
+        let contents = "\
+Rust:
+safe, fast, productive.
+Pick three.";
+
+        let want = vec!["safe, fast, productive."];
+
+        assert_eq!(want, search(query, contents));
+    }
+}
