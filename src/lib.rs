@@ -29,7 +29,15 @@ impl Config {
 // search results are tied to the contents,
 // so the lifetime of contents can be attached to the return value
 pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
-    vec![]
+    let mut results = Vec::new();
+
+    for line in contents.lines() {
+        if line.contains(query) {
+            results.push(line);
+        }
+    }
+
+    results
 }
 
 #[cfg(test)]
